@@ -8,7 +8,7 @@ namespace Medical_shop.Models
     public class Client : Base
     {
         public string Name { get; set; }
-        public DateTime CreatedAt { get; set; }
+        public string Date { get; set; }
         public string Email { get; set; }
 
         public List<Comment> Comments { get; set; }

@@ -12,9 +12,12 @@ namespace Medical_shop.Models
         public int Price { get; set; }
         public int Amount { get; set; }
 
-        public List<Order> Orders { get; set; }
-        public int TypeId { get; set; }
+        public int TypeOfProductId { get; set; }
 
-        public Product(int id) : base(id) { }
+        public virtual ICollection<Order> Orders { get; set; }
+        public Product(int id) : base(id)
+        {
+            Orders = new List<Order>();
+        }
     }
 }
