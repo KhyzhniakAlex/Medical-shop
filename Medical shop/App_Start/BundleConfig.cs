@@ -24,8 +24,14 @@ namespace Medical_shop
                       "~/Scripts/respond.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/bootstrap1.css",
+                      "~/Content/LayoutStyle.css"));
+
+            bundles.Add(new StyleBundle("~/Content/Products.css").Include(
+                      "~/Content/ProductsStyle.css"));
+
+            bundles.Add(new StyleBundle("~/Content/Basket.css").Include(
+                      "~/Content/BasketStyle.css"));
         }
     }
 }

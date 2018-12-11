@@ -1,43 +1,70 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>@ViewBag.Title – приложение ASP.NET</title>
     @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
 </head>
-<body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Имя приложения", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+<body style="background-color:#006223">
+
+    <div class="main">
+        <header>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-9 layoutCol-9">
+                        <h1 id="LayoutH1"><b>Товари медичного призначення</b></h1>
+                        <h2 id="LayoutH2">За детальною інформацією: +38 (095)386-05-09</h2>
+                    </div>
+                    <div class="col" id="btnId">
+                        <div class="row">
+                            <div class="col btnAuto1"><button type="button" class="btn btn-lg btn-primary" onclick="location.href='@Url.Action("/Log_in", "Authority")'">Увійти</button></div>
+                            <div class="w-100"></div>
+                            <div class="col btnAuto2"><button type="button" class="btn btn-lg btn-secondary" onclick="location.href='@Url.Action("/Registration", "Authority")'">Зареєструватись</button></div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Домашняя страница", "Index", "Home")</li>
-                    <li>@Html.ActionLink("О программе", "About", "Home")</li>
-                    <li>@Html.ActionLink("Контакт", "Contact", "Home")</li>
-                </ul>
+
+            <div class="container" id="menu">
+                <div class="row no-gutters" id="menuId">
+                    <div class="col-2 layoutCol-2">
+                        <a class="actionBar" href="@Url.Action("/Main", "Home")"><p class="menuP">ГОЛОВНА</p></a>
+                    </div>
+                    <div class="col-2 layoutCol-2">
+                        <a class="actionBar" href="@Url.Action("/Products", "Home")"><p class="menuP">ВСІ ТОВАРИ</p></a>
+                    </div>
+                    <div class="col-2 layoutCol-2">
+                        <a class="actionBar" href="@Url.Action("/Questions", "Home")"><p class="menuP">F.A.Q.</p></a>
+                    </div>
+                    <div class="col-2 layoutCol-2">
+                        <a class="actionBar" href="@Url.Action("/Contacts", "Home")"><p class="menuP">КОНТАКТИ</p></a>
+                    </div>
+                    <div class="col-2 layoutCol-2">
+                        <a class="actionBar" href="@Url.Action("/Delivery", "Home")"><p class="menuP">ДОСТАВКА</p></a>
+                    </div>
+                    <div class="col">
+                        <p></p>
+                    </div>
+                    <div class="col" id="grnId">
+                        <a class="actionBar" href="@Url.Action("/Basket", "Home")"><p class="menuP" id="grnInId">0 ГРН.</p></a>
+                    </div>
+                </div>
             </div>
+        </header>
+
+        <div>
+            @RenderBody()
         </div>
-    </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
+
         <footer>
-            <p>&copy; @DateTime.Now.Year – приложение ASP.NET</p>
+            <p id="footP">2018 – Курсова робота студента Хижняк О.С.</p>
         </footer>
     </div>
 
-    @Scripts.Render("~/bundles/jquery")
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
 </body>
 </html>

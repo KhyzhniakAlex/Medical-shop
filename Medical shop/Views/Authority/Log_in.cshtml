@@ -1,0 +1,41 @@
+﻿@{
+    ViewBag.Title = "Log in";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+</head>
+<body style="background-color:#006223">
+    <div style="margin: 4% 8.5% 5% 8.5%; background-color: #ffffff;">
+        <div class="container-fluid">
+            <div class="row">
+                <form method="POST" style="max-width: 500px; padding-left: 0; margin-top: 60px;" class="col-4 offset-4">
+                    <h2 class="form-heading" style="text-align:center; margin-bottom: 4%;">Please log in</h2>
+
+                    <div class="form-group ">
+                        <input name="email" type="text" class="form-control" placeholder="Email" autofocus="true" />
+                        <br>
+                        <input name="password" type="password" class="form-control" placeholder="Password" />
+                        <br>
+                        <div class="checkbox mb-3" style="text-align:center;">
+                            <input type="checkbox" name="remember" value="remember-me">
+                            <label>Remember me</label>
+                        </div>
+                        <br />
+                        <button class="btn btn-lg btn-primary btn-block" type="submit">Log In</button>
+                        <a href="@Url.Action("/Registration", "Authority")" class="btn btn-lg btn-secondary btn-block">Sign in</a>
+                        <br />
+                        <br />
+                    </div>
+                </form>
+            </div>
+        </div>
+     </div>
+</body>
+</html>

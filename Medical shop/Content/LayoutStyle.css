@@ -1,0 +1,135 @@
+﻿body {
+    padding: 0;
+    margin: 0;
+    font-family: sans-serif, Arial;
+}
+
+.main {
+    margin: 4% 8.5% 6% 8.5%;
+    background-color: #ffffff;
+}
+
+
+
+
+#LayoutH1 {
+    font-size: 3em;
+    color: #324a87;
+    text-shadow: 2px 2px #e6e6e6;
+}
+
+#LayoutH2 {
+    font-size: 1.7em;
+    color: #324a87;
+    text-align: center;
+}
+
+.layoutCol-9 {
+    padding: 4% 0 4% 7%;
+}
+
+#btnId {
+    text-align: center;
+}
+
+.btnAuto1 {
+    padding-top: 13%;
+    padding-bottom: 4%;
+}
+
+.btnAuto2 {
+    padding-top: 4%;
+    padding-bottom: 12.5%;
+}
+
+
+
+
+#menu {
+    background-color: #3a3d41;
+    padding: 0;
+}
+
+#menuId {
+    color: #ffffff;
+    margin-left: 6.4%;
+    max-width: 95%;
+    text-align: center;
+    //border: 1px solid red;
+}
+
+.menuP {
+    margin-bottom: 0%;
+    padding-top: 5%;
+    padding-bottom: 5%;
+    color: #ffffff;
+    font-size: 2.5vh;
+    //border: 1px solid red;
+    font-family: sans-serif, Arial;
+}
+
+.layoutCol-2 {
+    cursor: pointer;
+    //border: 1px solid red;
+}
+
+#grnId {
+    cursor: pointer;
+}
+
+#grnInId {
+    padding-top: 11%;
+    padding-bottom: 9%;
+}
+
+.layoutCol-2:hover{
+    background-color: #000000;
+}
+
+.actionBar:hover {
+    text-decoration: none;
+}
+
+#grnId:hover {
+    background-color: #000000;
+}
+
+
+
+
+
+footer {
+    padding: 1.5% 0 1.5% 0;
+    background-color: #3a3d41;
+}
+
+#footP {
+    margin-top: 1%;
+    margin-left: 7%;
+    color: #ffffff;
+}
+
+
+
+
+.newJumb {
+    background-color:#ffffff; 
+    width:93%; 
+    margin-left:3%; 
+}
+
+.lead {
+    color: #3a3d41;
+    font-size: 1.2vw;
+    font-weight: 400;
+    font-family: sans-serif, Arial;
+}
+
+li {
+    color: #3a3d41;
+    font-size: 1.2vw;
+    font-weight: 400;
+    font-family: sans-serif, Arial;
+}
+
+

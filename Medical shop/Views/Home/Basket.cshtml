@@ -1,0 +1,55 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Basket | Товари медичного призначення";
+}
+
+@Styles.Render("~/Content/Basket.css")
+<div class="jumbotron basketJumb">
+    <h2>Кошик</h2>
+    <div class="infoSumBasket">
+        <table class="tableBasket">
+            <tr><th id="beforePId">Мінімальна сума замовлення становить 300 грн.</th></tr>
+            <tr><td>Сума вашого замовлення зараз становить: </td></tr>
+        </table>
+    </div>
+
+    <div class="infoProductBasket">
+        <div class="container-fluid">
+            <div class="row newRowBasket">
+                <div class="col-6"><p id="TovarId"><b>Товар</b></p></div>
+                <div class="col-2"><p><b>Ціна</b></p></div>
+                <div class="col-2"><p><b>Кількість</b></p></div>
+                <div class="col-2"><p><b>Всього</b></p></div>
+            </div>
+            <div class="row newRowBasket">
+                <div class="col"><p><b>Товар</b></p></div>
+                <div class="col"><p><b>Товар</b></p></div>
+                <div class="col-4"><p><b>Товар</b></p></div>
+                <div class="col-2"><p><b>Кількість</b></p></div>
+                <div class="col-2"><p><b>Кількість</b></p></div>
+                <div class="col-2"><p><b>Всього</b></p></div>
+            </div>
+            <div class="row newRowBasket">
+                <div class="col-10"></div>
+                <div class="col-2"><button type="button" class="btn btn-secondary">Оновити кошик</button></div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <br />
+    <div class="infoResultBasket">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-6"></div>
+                <div class="col-6">
+                    <p><h4>Всього</h4></p>
+                    <table class="tableBasketEnd">
+                        <tr class="trBasketEnd"><th>Попередній підсумок</th><td>219 грн.</td></tr>
+                        <tr class="trBasketEnd"><th>Всього</th><td>219 грн.</td></tr>
+                    </table>
+                    <button type="button" class="btn btn-success btn-lg btn-block">Оформити замовлення</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

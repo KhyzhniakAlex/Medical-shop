@@ -8,22 +8,38 @@ namespace Medical_shop.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        public ActionResult Main()
         {
             return View();
         }
 
-        public ActionResult About()
+        public ActionResult Products()
         {
-            ViewBag.Message = "Your application description page.";
-
+            return View();
+        }
+        
+        public ActionResult Tourniquets()
+        {
             return View();
         }
 
-        public ActionResult Contact()
+        public ActionResult Questions()
         {
-            ViewBag.Message = "Your contact page.";
+            return View();
+        }
 
+        public ActionResult Contacts()
+        {
+            return View();
+        }
+
+        public ActionResult Delivery()
+        {
+            return View();
+        }
+
+        public ActionResult Basket()
+        {
             return View();
         }
     }

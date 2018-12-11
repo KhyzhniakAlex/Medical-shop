@@ -1,0 +1,60 @@
+﻿.basketJumb {
+    background-color: #ffffff;
+    width: 95%;
+    margin: auto;
+}
+
+.infoSumBasket {
+    border-top: 2px solid #b81c23;
+    background-color: #eaeaea;
+    padding-top: 1%;
+    padding-left: 6%;
+    padding-bottom: 1%;
+    margin-bottom: 7%;
+    color: #515151; 
+}
+
+.newRowBasket {
+    border: 1px solid black;
+    border-radius: 4px;
+}
+
+#TovarId {
+    text-align: center;
+}
+
+.col-3 {
+    border: 1px solid red;
+    text-align: center;
+}
+
+#beforePId::before {
+    //content: "\e016";
+    //color: #b81c23;
+}
+
+li {
+    list-style: none;
+}
+
+.col-3, .col-4, .col-2, .col-6, .col {
+    //border: 1px solid red;
+}
+
+.tableBasketEnd {
+    width: 100%;
+    margin-bottom: 5%;
+}
+
+.tableBasketEnd tr {
+    border: 1px solid black;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    border-radius: 4px;
+}
+
+.tableBasketEnd th {
+    width: 40%;
+    
+}
+
