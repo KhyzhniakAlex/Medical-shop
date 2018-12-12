@@ -1,0 +1,38 @@
+﻿@model IEnumerable<Medical_shop.Models.Entities.TypeOfProduct>
+    @{
+        Layout = "~/Views/Shared/_Layout.cshtml";
+        ViewBag.Title = "Categories | Товари медичного призначення";
+    }
+
+    @Styles.Render("~/Content/Products.css")
+    <div class="jumbotron productJumb">
+        <h3 id="productH3">Всі товари</h3>
+        <div class="container-fluid">
+            @{
+                int a = 0;
+                int b = 1;
+                while (a < Model.Count() % 4)
+                {
+                    <div class="row newRow">
+                        @foreach (Medical_shop.Models.Entities.TypeOfProduct type in Model)
+                        {
+                            <div class="col-3 new">
+                                <a href="/Home/Products/@type.Id">
+                                    <div>
+                                        <img src="@type.ImageDirection" class="imgAll" />
+                                        <br />
+                                        <p>@type.Name</p>
+                                    </div>
+                                </a>
+                            </div>
+                            b++;
+                            if (b % 4 == 0) { break; }
+                        }
+                    </div>
+                }
+            }
+        </div>
+    </div>
+
+
+

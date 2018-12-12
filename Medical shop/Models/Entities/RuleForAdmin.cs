@@ -5,11 +5,10 @@ using System.Web;
 
 namespace Medical_shop.Models.Entities
 {
-    public class Comment : Base
+    public class RuleForAdmin : Base
     {
-        public string Text { get; set; }
-        public string Date { get; set; }
-        public string Page { get; set; }
+        public string RulePassword { get; set; }
+        public bool isFree { get; set; }
 
         public int UserId { get; set; }
         public User User { get; set; }

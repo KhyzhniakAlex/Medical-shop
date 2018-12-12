@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Medical_shop.Models.Entities;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -8,11 +9,16 @@ namespace Medical_shop.Models.Services
 {
     public class MedicalContext : DbContext
     {
-        public DbSet<Client> Clients { get; set; }
+        //static MedicalContext()
+        //{
+        //    Database.SetInitializer<MedicalContext>(new MedicalDbInitializer());
+        //}
+
+        public DbSet<User> Users { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<Product> Products { get; set; }
-        public DbSet<TypeOfProduct> Types { get; set; }
+        public DbSet<TypeOfProduct> TypeOfProducts { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

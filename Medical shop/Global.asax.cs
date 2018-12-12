@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Medical_shop.Models.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using System.Data.Entity;
 
 namespace Medical_shop
 {
@@ -16,6 +18,8 @@ namespace Medical_shop
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            //Database.SetInitializer(new MedicalDbInitializer());
         }
     }
 }

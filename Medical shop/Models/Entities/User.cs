@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Medical_shop.Models
+namespace Medical_shop.Models.Entities
 {
-    public class Client : Base
+    public class User : Base
     {
-        public string Name { get; set; }
+        public string Login { get; set; }
+        public string Password { get; set; }
         public string Date { get; set; }
         public string Email { get; set; }
+        public string Role { get; set; }
 
         public List<Comment> Comments { get; set; }
         public List<Order> Orders { get; set; }
-
-        public Client(int id) : base(id) {}
     }
 }
