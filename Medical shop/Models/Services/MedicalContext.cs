@@ -19,6 +19,7 @@ namespace Medical_shop.Models.Services
         public DbSet<Order> Orders { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<TypeOfProduct> TypeOfProducts { get; set; }
+        public DbSet<RuleForAdmin> RulesForAdmin { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

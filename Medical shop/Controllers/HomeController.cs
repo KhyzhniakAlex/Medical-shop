@@ -22,32 +22,6 @@ namespace Medical_shop.Controllers
             return View(db.TypeOfProducts);
         }
 
-
-
-        [HttpGet]
-        public ViewResult Products(int? id)
-        {
-            if (id == null)
-            {
-                return View("~/Views/Home/Tourniquets.cshtml");
-            }
-
-            TypeOfProduct type = db.TypeOfProducts.Find(id);
-            if (type == null)
-            {
-                return View("~/Views/Shared/Error.cshtml");
-            }
-
-            type.Products = (List<Product>) db.Products.Where(m => m.TypeOfProductId == type.Id);
-            ViewBag.Products = type;
-            return View("~/Views/Home/Tourniquets.cshtml");
-        }
-
-
-
-
-
-
         public ActionResult Questions()
         {
             return View();
@@ -66,6 +40,50 @@ namespace Medical_shop.Controllers
         public ActionResult Basket()
         {
             return View();
+        }
+
+
+
+
+        [HttpGet]
+        public ViewResult Products(int? id)
+        {
+            if (id == null)
+            {
+                return View("~/Views/Shared/Error.cshtml");
+            }
+
+            TypeOfProduct type = db.TypeOfProducts.Find(id);
+            TypeOfProduct typeOne = type;
+            if (type == null)
+            {
+                return View("~/Views/Shared/Error.cshtml");
+            }
+
+            type.Products = (List<Product>) db.Products.Where(m => m.TypeOfProductId == type.Id);
+            ViewBag.Products = type;
+            ViewBag.TypeName = typeOne.Name;
+            return View("~/Views/Home/Tourniquets.cshtml");
+        }
+
+
+
+        [HttpGet]
+        public ViewResult OneProduct(int? id)
+        {
+            if (id == null)
+            {
+                return View("~/Views/Shared/Error.cshtml");
+            }
+
+            Product product = db.Products.Find(id);
+            if (product == null)
+            {
+                return View("~/Views/Shared/Error.cshtml");
+            }
+
+            ViewBag.Product = product;
+            return View("~/Views/Home/OneProduct.cshtml");
         }
     }
 }

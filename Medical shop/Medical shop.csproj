@@ -133,7 +133,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Entities\Admin.cs" />
     <Compile Include="Models\Entities\Base.cs" />
+    <Compile Include="Models\Entities\Client.cs" />
     <Compile Include="Models\Entities\User.cs" />
     <Compile Include="Models\Entities\Comment.cs" />
     <Compile Include="Models\Entities\Order.cs" />
@@ -145,6 +147,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\MedicalShop.mdf" />
+    <Content Include="App_Data\MedicalShop_log.ldf">
+      <DependentUpon>MedicalShop.mdf</DependentUpon>
+    </Content>
     <Content Include="Content\BasketStyle.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
@@ -219,12 +225,11 @@
     <Content Include="Views\Home\Basket.cshtml" />
     <Content Include="Views\Home\Categories.cshtml" />
     <Content Include="Views\Home\Contacts.cshtml" />
-    <Content Include="Views\Home\Tourniquets.cshtml" />
     <Content Include="Views\Home\Delivery.cshtml" />
+    <Content Include="Views\Home\Products.cshtml" />
+    <Content Include="Views\Home\OneProduct.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />

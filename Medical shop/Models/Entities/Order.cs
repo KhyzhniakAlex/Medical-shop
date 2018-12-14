@@ -7,8 +7,8 @@ namespace Medical_shop.Models.Entities
 {
     public class Order : Base
     {
-        public string Date { get; set; }
         public int Sum { get; set; }
+        public string Date { get; set; }
 
         public int UserId { get; set; }
         public User User { get; set; }

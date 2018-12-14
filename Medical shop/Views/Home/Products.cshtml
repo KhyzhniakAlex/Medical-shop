@@ -5,23 +5,33 @@
 
 @Styles.Render("~/Content/Products.css")
 <div class="jumbotron productJumb">
-    <h3 id="productH3">Артеріальні джгути</h3>
+    <h3 id="productH3">@ViewBag.TypeName</h3>
     <div class="container-fluid">
-        <div class="row newRowTour">
-            <div class="col-3 new">
-                <a>
-                    <div>
-                        <img src="~/Images/holder fot the tourniquet.jpg" class="imgAll" />
-                        <br />
-                        <p class="TourniquetP">Тримач для турнікета</p>
-                        <p>219 грн.</p>
-                    </div>
-                </a>
-                <button type="button" class="btn btn-success">Додати в кошик</button>
-            </div>
-        </div>
+        @{
+            int a = 0;
+            int b = 1;
+            while (a < ViewBag.Products.Count() % 4)
+            {
+                <div class="row newRow">
+                    @foreach (var product in ViewBag.Products)
+                    {
+                        <div class="col-3 new">
+                            <a href="/Home/OneProduct/@product.Id">
+                                <div>
+                                    <img src="@product.ImageDirection1" class="imgAll" />
+                                    <br />
+                                    <p class="ProductP">@product.Name</p>
+                                    <p>@product.Sum грн.</p>
+                                </div>
+                            </a>
+                            <button type="button" class="btn btn-success">Додати в кошик</button>
+                        </div>
+                        b++;
+                        if (b % 4 == 0) { break; }
+                    }
+                </div>
+            }
+        }
     </div>
-
-
 </div>
 
