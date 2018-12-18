@@ -3,6 +3,7 @@
     ViewBag.Title = "Products | Товари медичного призначення";
 }
 
+@using Medical_shop.Models.Entities;
 @Styles.Render("~/Content/Products.css")
 <div class="jumbotron productJumb">
     <h3 id="productH3">@ViewBag.TypeName</h3>
@@ -10,28 +11,49 @@
         @{
             int a = 0;
             int b = 1;
+            Product product;
             while (a < ViewBag.Products.Count() % 4)
             {
                 <div class="row newRow">
-                    @foreach (var product in ViewBag.Products)
+                    @foreach (PrimaryProduct pp in ViewBag.Products)
                     {
                         <div class="col-3 new">
-                            <a href="/Home/OneProduct/@product.Id">
+                            <a href="/Home/OneProduct/@pp.Id">
                                 <div>
-                                    <img src="@product.ImageDirection1" class="imgAll" />
+                                    <img src="@pp.ImageDirection" class="imgAll" />
                                     <br />
-                                    <p class="ProductP">@product.Name</p>
-                                    <p>@product.Sum грн.</p>
+                                    <p class="ProductP">@pp.Name</p>
+                                    <p>@pp.Price грн.</p>
+                                    @{
+                                        switch (pp.Sale)
+                                        {
+                                            case "20":
+                                                <br />
+                                                product = pp;
+                                                product = new Sale20Percent(product);
+                                                <p>@product.GetCost(pp) грн.</p>
+                                                break;
+                                            case "40":
+                                                <br />
+                                                product = pp;
+                                                product = new Sale40Percent(product);
+                                                <p>@product.GetCost(pp) грн.</p>
+                                                break;
+                                            case "0":
+                                                break;
+                                        }
+                                    }
                                 </div>
                             </a>
                             <button type="button" class="btn btn-success">Додати в кошик</button>
                         </div>
+
                         b++;
                         if (b % 4 == 0) { break; }
                     }
                 </div>
             }
-        }
+         }
     </div>
 </div>
 

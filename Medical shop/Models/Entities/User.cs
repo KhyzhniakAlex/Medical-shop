@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Medical_shop.Models.Entities
 {
-    public class User : Base
+    public abstract class User : Base
     {
         public string Login { get; set; }
         public string Password { get; set; }

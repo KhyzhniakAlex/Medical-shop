@@ -10,6 +10,6 @@ namespace Medical_shop.Models.Entities
         public string Name { get; set; }
         public string ImageDirection { get; set; }
 
-        public List<Product> Products { get; set; }
+        public List<PrimaryProduct> Products { get; set; }
     }
 }

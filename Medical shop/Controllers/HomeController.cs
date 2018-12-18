@@ -60,7 +60,7 @@ namespace Medical_shop.Controllers
                 return View("~/Views/Shared/Error.cshtml");
             }
 
-            type.Products = (List<Product>) db.Products.Where(m => m.TypeOfProductId == type.Id);
+            type.Products = (List<PrimaryProduct>) db.PrimaryProducts.AsNoTracking().Where(m => m.TypeOfProductId == type.Id);
             ViewBag.Products = type;
             ViewBag.TypeName = typeOne.Name;
             return View("~/Views/Home/Tourniquets.cshtml");
@@ -76,7 +76,7 @@ namespace Medical_shop.Controllers
                 return View("~/Views/Shared/Error.cshtml");
             }
 
-            Product product = db.Products.Find(id);
+            PrimaryProduct product = db.PrimaryProducts.Find(id);
             if (product == null)
             {
                 return View("~/Views/Shared/Error.cshtml");

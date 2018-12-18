@@ -13,10 +13,10 @@ namespace Medical_shop.Models.Entities
         public int UserId { get; set; }
         public User User { get; set; }
 
-        public virtual ICollection<Product> Products { get; set; }
+        public virtual ICollection<PrimaryProduct> PrimaryProducts { get; set; }
         public Order()
         {
-            Products = new List<Product>();
+            PrimaryProducts = new List<PrimaryProduct>();
         }
     }
 }
