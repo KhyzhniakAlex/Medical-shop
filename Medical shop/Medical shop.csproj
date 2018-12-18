@@ -133,9 +133,16 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Entities\Admin.cs" />
+    <Compile Include="Migrations\201812141211336_init.cs" />
+    <Compile Include="Migrations\201812141211336_init.Designer.cs">
+      <DependentUpon>201812141211336_init.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812181805591_init1.cs" />
+    <Compile Include="Migrations\201812181805591_init1.Designer.cs">
+      <DependentUpon>201812181805591_init1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Entities\Base.cs" />
-    <Compile Include="Models\Entities\Client.cs" />
     <Compile Include="Models\Entities\User.cs" />
     <Compile Include="Models\Entities\Comment.cs" />
     <Compile Include="Models\Entities\Order.cs" />
@@ -147,10 +154,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\MedicalShop.mdf" />
-    <Content Include="App_Data\MedicalShop_log.ldf">
-      <DependentUpon>MedicalShop.mdf</DependentUpon>
-    </Content>
     <Content Include="Content\BasketStyle.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
@@ -229,7 +232,9 @@
     <Content Include="Views\Home\Products.cshtml" />
     <Content Include="Views\Home\OneProduct.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
@@ -237,6 +242,14 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201812141211336_init.resx">
+      <DependentUpon>201812141211336_init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812181805591_init1.resx">
+      <DependentUpon>201812181805591_init1.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

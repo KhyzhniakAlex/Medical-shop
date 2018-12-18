@@ -10,9 +10,7 @@ namespace Medical_shop.Models.Entities
         public string Name { get; set; }
         public int Price { get; set; }
         public int Amount { get; set; }
-        public string ImageDirection1 { get; set; }
-        public string ImageDirection2 { get; set; }
-        public string ImageDirection3 { get; set; }
+        public string ImageDirection { get; set; }
         public string Text { get; set; }
 
         public int TypeOfProductId { get; set; }
