@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Medical_shop.Models.Entities.TypeOfProduct>
+﻿@model IEnumerable<Medical_shop.Models.Entities.Comment>
     @{
         Layout = "~/Views/Shared/_Layout.cshtml";
         ViewBag.Title = "Categories | Товари медичного призначення";
@@ -11,10 +11,10 @@
             @{
                 int a = 0;
                 int b = 1;
-                while (a < Model.Count() % 4)
+                while (a < ViewBag.Categories.Count() % 4)
                 {
                     <div class="row newRow">
-                        @foreach (Medical_shop.Models.Entities.TypeOfProduct type in Model)
+                        @foreach (var type in ViewBag.Categories)
                         {
                             <div class="col-3 new">
                                 <a href="/Home/Products/@type.Id">
@@ -29,6 +29,34 @@
                             if (b % 4 == 0) { break; }
                         }
                     </div>
+                }
+            }
+        </div>
+        <br />
+        <br />
+        @{
+            if (User.Identity.IsAuthenticated)
+            {
+                <form method="post" action="@Url.Action("AddComment", "HomeController")">
+                    <input type="text" name="Text" />
+                    <input type="hidden" name="Page" value="Categories" />
+                    <button type="submit">Додати</button>
+                </form>
+            }
+        }
+        <br />
+        <br />
+        <p class="CategoriesCommentsH">Коментарі</p>
+        <br />
+        <div>
+            @foreach (var comment in Model)
+            {
+                if (comment.Page == "Categories")
+                {
+                    <div id="textComments">
+                        "@comment.Text"
+                    </div>
+                    <hr class="lines" />
                 }
             }
         </div>

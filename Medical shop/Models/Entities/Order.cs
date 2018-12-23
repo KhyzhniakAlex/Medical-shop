@@ -18,5 +18,20 @@ namespace Medical_shop.Models.Entities
         {
             PrimaryProducts = new List<PrimaryProduct>();
         }
+
+        //private static Order instance;
+
+        //public static Order GetInstance()
+        //{
+        //    if (instance == null)
+        //        instance = new Order();
+        //    return instance;
+        //}
+
+        //public static Order CreateNewInstance()
+        //{
+        //    instance = new Order();
+        //    return instance;
+        //}
     }
 }

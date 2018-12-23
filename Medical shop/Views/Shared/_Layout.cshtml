@@ -17,12 +17,22 @@
                         <h1 id="LayoutH1"><b>Товари медичного призначення</b></h1>
                         <h2 id="LayoutH2">За детальною інформацією: +38 (095)386-05-09</h2>
                     </div>
-                    <div class="col" id="btnId">
-                        <div class="row">
-                            <div class="col btnAuto1"><button type="button" class="btn btn-lg btn-primary" onclick="location.href='@Url.Action("/Log_in", "Authority")'">Увійти</button></div>
-                            <div class="w-100"></div>
-                            <div class="col btnAuto2"><button type="button" class="btn btn-lg btn-secondary" onclick="location.href='@Url.Action("/Registration", "Authority")'">Зареєструватись</button></div>
-                        </div>
+                    <div class="col blockAuthority" id="btnId">
+                        @{
+                            if (User.Identity.IsAuthenticated)
+                            {
+                                <div class="welcoming"><p class="welcomingText"><b>Ласкаво просимо @User.Identity.Name</b></p></div>
+                                <div class="btnLogout"><button type="button" class="btn btn-lg btn-primary" onclick="location.href='@Url.Action("/Logoff", "Authority")'">Log out</button></div>
+                            }
+                            else
+                            {
+                                <div class="row">
+                                    <div class="col btnAuto1"><button type="button" class="btn btn-lg btn-primary" onclick="location.href='@Url.Action("/Log_in", "Authority")'">Log in</button></div>
+                                    <div class="w-100"></div>
+                                    <div class="col btnAuto2"><button type="button" class="btn btn-lg btn-secondary" onclick="location.href='@Url.Action("/Registration", "Authority")'">Sign in</button></div>
+                                </div>
+                            }
+                        }
                     </div>
                 </div>
             </div>
@@ -48,7 +58,18 @@
                         <p></p>
                     </div>
                     <div class="col" id="grnId">
-                        <a class="actionBar" href="@Url.Action("/Basket", "Home")"><p class="menuP" id="grnInId">0 ГРН.</p></a>
+                        @{
+                            int sum = 0;
+                            if (User.Identity.IsAuthenticated)
+                            {
+                                Medical_shop.Models.Services.MedicalContext db = new Medical_shop.Models.Services.MedicalContext();
+                                foreach (var item in db.Orders)
+                                {
+                                    sum = item.Sum;
+                                }
+                            }
+                            <a class="actionBar" href="@Url.Action("/Basket", "Home")"><p class="menuP" id="grnInId">@sum ГРН.</p></a>
+                        }
                     </div>
                 </div>
             </div>

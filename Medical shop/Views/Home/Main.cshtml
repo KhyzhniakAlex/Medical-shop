@@ -1,4 +1,5 @@
-﻿@{
+﻿@model IEnumerable<Medical_shop.Models.Entities.Comment>
+@{
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Main | Товари медичного призначення";
 }
@@ -17,4 +18,32 @@
     <br />
     <p class="lead">Пам'ятайте, що ваше власне життя або життя вашої близької людини залежить не тільки від працівників швидкої допомоги, але й від
                     вашого власного досвіду. Завчасне надання першої медичної допомоги може подарувати безцінні години до приїзду карети швидкої допомоги.</p>
+    <br />
+    <br />
+    @{
+        if (User.Identity.IsAuthenticated)
+        {
+            <form method="post" action="@Url.Action("AddComment", "HomeController")">
+                <input type="text" name="Text" />
+                <input type="hidden" name="Page" value="Main" />
+                <button type="submit">Додати</button>
+            </form>
+        }
+    }
+    <br />
+    <br />
+    <p class="MainCommentsH">Коментарі</p>
+    <br />
+    <div>
+        @foreach (var comment in Model)
+        {
+            if (comment.Page == "Main")
+            {
+                <div id="textComments">
+                    "@comment.Text"
+                </div>
+                    <hr class="lines" />
+            }
+        }
+    </div>
 </div>

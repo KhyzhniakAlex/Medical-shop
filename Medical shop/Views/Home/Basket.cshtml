@@ -1,55 +1,108 @@
-﻿@{
+﻿@model IEnumerable<Medical_shop.Models.Entities.Comment>
+@{
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Basket | Товари медичного призначення";
 }
 
+@using Medical_shop.Models.Entities;
 @Styles.Render("~/Content/Basket.css")
 <div class="jumbotron basketJumb">
     <h2>Кошик</h2>
-    <div class="infoSumBasket">
-        <table class="tableBasket">
-            <tr><th id="beforePId">Мінімальна сума замовлення становить 300 грн.</th></tr>
-            <tr><td>Сума вашого замовлення зараз становить: </td></tr>
-        </table>
-    </div>
-
-    <div class="infoProductBasket">
-        <div class="container-fluid">
-            <div class="row newRowBasket">
-                <div class="col-6"><p id="TovarId"><b>Товар</b></p></div>
-                <div class="col-2"><p><b>Ціна</b></p></div>
-                <div class="col-2"><p><b>Кількість</b></p></div>
-                <div class="col-2"><p><b>Всього</b></p></div>
-            </div>
-            <div class="row newRowBasket">
-                <div class="col"><p><b>Товар</b></p></div>
-                <div class="col"><p><b>Товар</b></p></div>
-                <div class="col-4"><p><b>Товар</b></p></div>
-                <div class="col-2"><p><b>Кількість</b></p></div>
-                <div class="col-2"><p><b>Кількість</b></p></div>
-                <div class="col-2"><p><b>Всього</b></p></div>
-            </div>
-            <div class="row newRowBasket">
-                <div class="col-10"></div>
-                <div class="col-2"><button type="button" class="btn btn-secondary">Оновити кошик</button></div>
-            </div>
+    <form method="post" action="@Url.Action("RefreshBasket", "HomeController")">
+        <div class="infoSumBasket">
+            <table class="tableBasket">
+                <tr><th id="beforePId">Мінімальна сума замовлення становить 300 грн.</th></tr>
+                @{
+                    int sum = 0;
+                    foreach (var product in ViewBag.Products)
+                    {
+                        sum += product.Price;
+                    }
+                    <tr><td>Сума вашого замовлення зараз становить: @sum грн.</td></tr>
+                }
+            </table>
         </div>
-    </div>
-    <br />
-    <br />
-    <div class="infoResultBasket">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-6"></div>
-                <div class="col-6">
-                    <p><h4>Всього</h4></p>
-                    <table class="tableBasketEnd">
-                        <tr class="trBasketEnd"><th>Попередній підсумок</th><td>219 грн.</td></tr>
-                        <tr class="trBasketEnd"><th>Всього</th><td>219 грн.</td></tr>
-                    </table>
-                    <button type="button" class="btn btn-success btn-lg btn-block">Оформити замовлення</button>
+
+        <div class="infoProductBasket">
+            <div class="container-fluid">
+                <div class="row newRowBasket">
+                      <div class="col-6"><p id="TovarId"><b>Товар</b></p></div>
+                      <div class="col-2"><p><b>Ціна</b></p></div>
+                      <div class="col-2"><p><b>Кількість</b></p></div>
+                      <div class="col-2"><p><b>Всього</b></p></div>
+                 </div>
+                 @{
+                    PrimaryProduct currentProduct = null;
+                    foreach (var order in ViewBag.Order)
+                    {
+                        if (currentProduct.Id == order.Id) { continue; }
+                        currentProduct = order;
+                        int amount = 0;
+                        foreach (var orderInto in ViewBag.Order)
+                        {
+                            if (orderInto.Id == order.Id) { amount++; }
+                        }
+                        <div class="row newRowBasket">
+                            <div class="col"><a href="/Home/DeleteProductFromOrder/@order.Id"><img src="~/Images/red cross.png" class="RedCrossProdImg" /></a></div>
+                            <div class="col"><img src="@order.ImageDirection" class="basketProdImg" /></div>
+                            <div class="col-4"><p>@order.Name</p></div>
+                            <div class="col-2"><p><b>@order.Price</b></p></div>
+                            <div class="col-2"><input type="number" class="counter" name="counter" min="1" max="50" placeholder="@amount"></div>
+                            <div class="col-2"><p><b>Всього</b></p></div>
+                        </div>
+                    }
+                }
+                <div class="row newRowBasket">
+                    <div class="col-10"></div>
+                    <div class="col-2"><button type="submit" class="btn btn-secondary">Оновити кошик</button></div>
                 </div>
             </div>
         </div>
+    </form>
+        <br />
+        <br />
+    <form method="post" action="@Url.Action("SaveOrder", "HomeController")">
+        <div class="infoResultBasket">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-6"></div>
+                    <div class="col-6">
+                        <p><h4>Всього</h4></p>
+                        <table class="tableBasketEnd">
+                            <tr class="trBasketEnd"><th>Всього</th><td>@sum грн.</td></tr>
+                        </table>
+                        <button type="submit" class="btn btn-success btn-lg btn-block">Оформити замовлення</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <br />
+    <br />
+    @{
+        if (User.Identity.IsAuthenticated)
+        {
+            <form method="post" action="@Url.Action("AddComment", "HomeController")">
+                <input type="text" name="Text" />
+                <input type="hidden" name="Page" value="Basket" />
+                <button type="submit">Додати</button>
+            </form>
+        }
+    }
+    <br />
+    <br />
+    <p class="BasketCommentsH">Коментарі</p>
+    <br />
+    <div>
+        @foreach (var comment in Model)
+        {
+            if (comment.Page == "Basket")
+            {
+                <div id="textComments">
+                    "@comment.Text"
+                </div>
+                <hr class="lines" />
+            }
+        }
     </div>
 </div>

@@ -1,17 +1,93 @@
-﻿
+﻿@model IEnumerable<Medical_shop.Models.Entities.Comment>
 @{
-    Layout = null;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Details | Товари медичного призначення";
 }
 
-<!DOCTYPE html>
+@using Medical_shop.Models.Entities;
+@using Medical_shop.Models.Decorator;
+@Styles.Render("~/Content/OneProduct.css")
+<div class="jumbotron oneProdJumb">
+    <form method="post" action="@Url.Action("OneProduct", "HomeController")">
+        <div class="container">
+            <div class="row">
+                <div class="col-6">
+                    <img src="@ViewBag.Product.ImageDirection" class="imgOneProduct" />
+                </div>
+                <div class="col-6">
+                    <input type="hidden" value="@ViewBag.Product.Id" name="Id" />
+                    <p class="OneProdName">@ViewBag.Product.Name</p>
+                    <p class="firstPrice">@ViewBag.Product.Price</p>
+                    @{
+                        Product product;
+                        PrimaryProduct pp = ViewBag.Product;
+                        switch (pp.Sale)
+                        {
+                            case "20":
+                                <br />
+                                product = pp;
+                                product = new Sale20Percent(product);
+                                <p class="salePrice">@product.GetCost(pp) грн.</p>
+                                break;
+                            case "40":
+                                <br />
+                                product = pp;
+                                product = new Sale40Percent(product);
+                                <p class="salePrice">@product.GetCost(pp) грн.</p>
+                                break;
+                            case "0":
+                                break;
+                        }
+                    }
+                    <div>
+                        <input type="number" class="counter" name="counter" min="1" max="50" placeholder="1">
+                        <button type="submit" class="btn btn-success">Додати в кошик</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <br />
+    <br />
+    <div class="tabs">
+        <input type="radio" name="inset" value="" id="tab_1" checked>
+        <label for="tab_1">Опис</label>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>OneProduct</title>
-</head>
-<body>
-    <div> 
+        <input type="radio" name="inset" value="" id="tab_2">
+        <label for="tab_2">Відгуки</label>
+
+        <div id="txt_1">
+            <p class="OneProdText">@ViewBag.Product.Text</p>
+        </div>
+        <div id="txt_2">
+            <br />
+            <br />
+            @{
+                if (User.Identity.IsAuthenticated)
+                {
+                    <form method="post" action="@Url.Action("AddComment", "HomeController")">
+                        <input type="text" name="Text" />
+                        <input type="hidden" name="Page" value="OneProduct" />
+                        <button type="submit">Додати</button>
+                    </form>
+                }
+            }
+            <br />
+            <br />
+            <p class="OneProductCommentsH">Коментарі</p>
+            <br />
+            <div>
+                @foreach (var comment in Model)
+                {
+                    if (comment.Page == "OneProduct")
+                    {
+                        <div id="textComments">
+                            "@comment.Text"
+                        </div>
+                        <hr class="lines" />
+                    }
+                }
+            </div>
+        </div>
     </div>
-</body>
-</html>
+</div>

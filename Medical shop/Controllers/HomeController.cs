@@ -1,5 +1,6 @@
 ﻿using Medical_shop.Models.Entities;
 using Medical_shop.Models.Services;
+using Medical_shop.Models.Decorator;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,12 +15,14 @@ namespace Medical_shop.Controllers
 
         public ActionResult Main()
         {
-            return View();
+            
+            return View(db.Comments);
         }
 
         public ActionResult Categories()
         {
-            return View(db.TypeOfProducts);
+            ViewBag.Categories = db.TypeOfProducts;
+            return View(db.Comments);
         }
 
         public ActionResult Questions()
@@ -39,51 +42,87 @@ namespace Medical_shop.Controllers
 
         public ActionResult Basket()
         {
-            return View();
+            if (User.Identity.IsAuthenticated)
+            {
+                //var order = Order.GetInstance();
+                var order = (Order)Session["Order"];
+
+                ViewBag.Products = order.PrimaryProducts;
+                return View(db.Comments);
+            }
+            ViewBag.Products = null;
+            return View(db.Comments);
         }
 
 
+        [HttpPost]
+        public ViewResult AddComment(Comment comment)
+        {
+            HomeServices.AddComment(comment);
+            return View($"~/Views/Home/{comment.Page}.cshtml");
+        }
 
 
         [HttpGet]
-        public ViewResult Products(int? id)
+        public ViewResult Products(int id)
         {
-            if (id == null)
-            {
-                return View("~/Views/Shared/Error.cshtml");
-            }
+            TypeOfProduct type = HomeServices.GetProducts(id);
+            if (type == null) return View("~/Views/Shared/Error.cshtml");
 
-            TypeOfProduct type = db.TypeOfProducts.Find(id);
-            TypeOfProduct typeOne = type;
-            if (type == null)
-            {
-                return View("~/Views/Shared/Error.cshtml");
-            }
-
-            type.Products = (List<PrimaryProduct>) db.PrimaryProducts.AsNoTracking().Where(m => m.TypeOfProductId == type.Id);
             ViewBag.Products = type;
-            ViewBag.TypeName = typeOne.Name;
-            return View("~/Views/Home/Tourniquets.cshtml");
+            ViewBag.TypeName = type.Name;
+            return View("~/Views/Home/Products.cshtml");
+        }
+
+        [HttpPost]
+        public void Products(PrimaryProduct pp)
+        {
+            var order = (Order)Session["Order"];
+            HomeServices.PostProduct(pp, order);
         }
 
 
 
         [HttpGet]
-        public ViewResult OneProduct(int? id)
+        public ViewResult OneProduct(int id)
         {
-            if (id == null)
-            {
-                return View("~/Views/Shared/Error.cshtml");
-            }
-
             PrimaryProduct product = db.PrimaryProducts.Find(id);
-            if (product == null)
-            {
-                return View("~/Views/Shared/Error.cshtml");
-            }
+            if (product == null) return View("~/Views/Shared/Error.cshtml");
 
             ViewBag.Product = product;
+            ViewBag.Comments = db.Comments;
             return View("~/Views/Home/OneProduct.cshtml");
+        }
+
+        [HttpPost]
+        public void OneProduct(PrimaryProduct pp)
+        {
+            var order = (Order)Session["Order"];
+            HomeServices.PostProduct(pp, order);
+        }
+
+
+
+        public ViewResult DeleteProductFromOrder(int id)
+        {
+            var order = (Order)Session["Order"];
+            HomeServices.DeleteProductFromOrder(id, order);
+            return View("~/Views/Home/Basket.cshtml");
+        }
+
+        [HttpPost]
+        public ViewResult SaveOrder()
+        {
+            var order = (Order)Session["Order"];
+            HomeServices.SaveOrder(order);
+            Session["Order"] = new Order { UserId = db.Users.Max(p => p.Id) };
+            return View("~/Views/Home/Categories.cshtml");
+        }
+
+        public ViewResult RefreshBasket()
+        {
+            HomeServices.RefreshBasket();
+            return View("~/Views/Home/Basket.cshtml");
         }
     }
 }

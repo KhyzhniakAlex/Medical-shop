@@ -30,6 +30,7 @@
 
 #btnId {
     text-align: center;
+    //border: 1px solid red;
 }
 
 .btnAuto1 {
@@ -41,6 +42,27 @@
     padding-top: 4%;
     padding-bottom: 12.5%;
 }
+
+.welcoming {
+    margin: auto;
+    width: 70%;
+    //border: 1px solid red;
+    margin-top: 12%;
+    margin-bottom: 8%;
+}
+
+.welcomingText {
+    font: bold;
+    color: #324a87;
+    margin: 0;
+}
+
+.btnLogout {
+    //border: 1px solid red;
+    margin-bottom: 8%;
+}
+
+
 
 
 

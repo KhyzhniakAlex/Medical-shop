@@ -67,5 +67,7 @@ namespace Medical_shop.Models.Services
 
         //    base.Seed(context);
         //}
+
+
     }
 }

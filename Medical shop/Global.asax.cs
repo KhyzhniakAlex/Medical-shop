@@ -19,7 +19,7 @@ namespace Medical_shop
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            Database.SetInitializer(new MedicalDbInitializer());
+            //Database.SetInitializer(new MedicalDbInitializer());
         }
     }
 }

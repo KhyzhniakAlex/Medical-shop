@@ -32,6 +32,9 @@ namespace Medical_shop
 
             bundles.Add(new StyleBundle("~/Content/Basket.css").Include(
                       "~/Content/BasketStyle.css"));
+
+            bundles.Add(new StyleBundle("~/Content/OneProduct.css").Include(
+                      "~/Content/OneProductStyle.css"));
         }
     }
 }

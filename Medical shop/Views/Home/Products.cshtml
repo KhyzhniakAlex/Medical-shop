@@ -4,56 +4,60 @@
 }
 
 @using Medical_shop.Models.Entities;
+@using Medical_shop.Models.Decorator;
 @Styles.Render("~/Content/Products.css")
 <div class="jumbotron productJumb">
     <h3 id="productH3">@ViewBag.TypeName</h3>
-    <div class="container-fluid">
-        @{
-            int a = 0;
-            int b = 1;
-            Product product;
-            while (a < ViewBag.Products.Count() % 4)
-            {
-                <div class="row newRow">
-                    @foreach (PrimaryProduct pp in ViewBag.Products)
-                    {
-                        <div class="col-3 new">
-                            <a href="/Home/OneProduct/@pp.Id">
-                                <div>
-                                    <img src="@pp.ImageDirection" class="imgAll" />
-                                    <br />
-                                    <p class="ProductP">@pp.Name</p>
-                                    <p>@pp.Price грн.</p>
-                                    @{
-                                        switch (pp.Sale)
-                                        {
-                                            case "20":
-                                                <br />
-                                                product = pp;
-                                                product = new Sale20Percent(product);
-                                                <p>@product.GetCost(pp) грн.</p>
-                                                break;
-                                            case "40":
-                                                <br />
-                                                product = pp;
-                                                product = new Sale40Percent(product);
-                                                <p>@product.GetCost(pp) грн.</p>
-                                                break;
-                                            case "0":
-                                                break;
+    <form method="post">
+        <div class="container-fluid">
+            @{
+                int a = 0;
+                int b = 1;
+                Product product;
+                while (a < ViewBag.Products.Count() % 4)
+                {
+                    <div class="row newRow">
+                        @foreach (PrimaryProduct pp in ViewBag.Products)
+                        {
+                            <div class="col-3 new">
+                                <a href="/Home/OneProduct/@pp.Id">
+                                    <input type="hidden" value="@pp.Id" name="Id" />
+                                    <div>
+                                        <img src="@pp.ImageDirection" class="imgAll" />
+                                        <br />
+                                        <p class="ProductP">@pp.Name (@pp.Amount)</p>
+                                        <p>@pp.Price грн.</p>
+                                        @{
+                                            switch (pp.Sale)
+                                            {
+                                                case "20":
+                                                    <br />
+                                                    product = pp;
+                                                    product = new Sale20Percent(product);
+                                                    <p>@product.GetCost(pp) грн.</p>
+                                                    break;
+                                                case "40":
+                                                    <br />
+                                                    product = pp;
+                                                    product = new Sale40Percent(product);
+                                                    <p>@product.GetCost(pp) грн.</p>
+                                                    break;
+                                                case "0":
+                                                    break;
+                                            }
                                         }
-                                    }
-                                </div>
-                            </a>
-                            <button type="button" class="btn btn-success">Додати в кошик</button>
-                        </div>
+                                    </div>
+                                </a>
+                                <button type="submit" class="btn btn-success">Додати в кошик</button>
+                            </div>
 
-                        b++;
-                        if (b % 4 == 0) { break; }
-                    }
-                </div>
-            }
-         }
-    </div>
+                            b++;
+                            if (b % 4 == 0) { break; }
+                        }
+                    </div>
+                }
+             }
+        </div>
+    </form>
 </div>
 
