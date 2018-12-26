@@ -1,18 +1,16 @@
-﻿@model IEnumerable<Medical_shop.Models.Entities.Comment>
-@{
+﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Details | Товари медичного призначення";
 }
 
 @using Medical_shop.Models.Entities;
 @using Medical_shop.Models.Decorator;
-@Styles.Render("~/Content/OneProduct.css")
 <div class="jumbotron oneProdJumb">
     <form method="post" action="@Url.Action("OneProduct", "HomeController")">
         <div class="container">
             <div class="row">
                 <div class="col-6">
-                    <img src="@ViewBag.Product.ImageDirection" class="imgOneProduct" />
+                    <img src="@Url.Content(ViewBag.Product.ImageDirection)" class="imgOneProduct" />
                 </div>
                 <div class="col-6">
                     <input type="hidden" value="@ViewBag.Product.Id" name="Id" />
@@ -41,7 +39,11 @@
                     }
                     <div>
                         <input type="number" class="counter" name="counter" min="1" max="50" placeholder="1">
-                        <button type="submit" class="btn btn-success">Додати в кошик</button>
+                        @{
+                            if (User.Identity.IsAuthenticated)
+                            { <button type="submit" class="btn btn-success">Додати в кошик</button> }
+                            <button type="button" class="btn btn-success">Додати в кошик</button>
+                        }
                     </div>
                 </div>
             </div>
@@ -61,12 +63,11 @@
         </div>
         <div id="txt_2">
             <br />
-            <br />
             @{
                 if (User.Identity.IsAuthenticated)
                 {
-                    <form method="post" action="@Url.Action("AddComment", "HomeController")">
-                        <input type="text" name="Text" />
+                    <form method="post" action="@Url.Action("/AddComment", "Home")">
+                        <input type="text" name="Text" autocomplete="off" />
                         <input type="hidden" name="Page" value="OneProduct" />
                         <button type="submit">Додати</button>
                     </form>
@@ -74,19 +75,27 @@
             }
             <br />
             <br />
-            <p class="OneProductCommentsH">Коментарі</p>
-            <br />
             <div>
-                @foreach (var comment in Model)
+            <table class="tableComment">
+                @foreach (var comment in ViewBag.Comments)
                 {
                     if (comment.Page == "OneProduct")
                     {
-                        <div id="textComments">
-                            "@comment.Text"
-                        </div>
-                        <hr class="lines" />
+                        <tr id="trComments">
+                            <th id="thComments">
+                                @{ 
+                                    Medical_shop.Models.Services.MedicalContext db = new Medical_shop.Models.Services.MedicalContext();
+                                    foreach (var item in db.Users)
+                                    {
+                                        if (item.Id == comment.UserId) { <p>@item.Login :</p>}
+                                    }
+                                }
+                            </th>
+                            <td id="tdComments"><textarea rows="4" cols="100" readonly>@comment.Text</textarea></td>
+                        </tr>
                     }
                 }
+            </table>
             </div>
         </div>
     </div>

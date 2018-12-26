@@ -25,7 +25,7 @@
                         <h2 class="form-heading" style="text-align:center; margin-bottom: 4%;">Please sign in</h2>
 
                         <div class="form-group">
-                            <input name="Name" id="name" type="text" class="form-control" placeholder="Username" autofocus required />
+                            <input name="Name" id="name" type="text" class="form-control" placeholder="Username" autofocus required autocomplete="off" />
                             @Html.ValidationMessageFor(model => model.Name)
                             <br>
                             <input name="Password" id="password" type="password" class="form-control" placeholder="Password" required />

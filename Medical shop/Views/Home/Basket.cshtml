@@ -5,7 +5,7 @@
 }
 
 @using Medical_shop.Models.Entities;
-@Styles.Render("~/Content/Basket.css")
+@using Medical_shop.Models.Decorator;
 <div class="jumbotron basketJumb">
     <h2>Кошик</h2>
     <form method="post" action="@Url.Action("RefreshBasket", "HomeController")">
@@ -33,22 +33,47 @@
                  </div>
                  @{
                     PrimaryProduct currentProduct = null;
-                    foreach (var order in ViewBag.Order)
+                    foreach (var product in ViewBag.Products)
                     {
-                        if (currentProduct.Id == order.Id) { continue; }
-                        currentProduct = order;
+                        if (currentProduct.Id == product.Id) { continue; }
+                        currentProduct = product;
                         int amount = 0;
-                        foreach (var orderInto in ViewBag.Order)
+                        foreach (var productInto in ViewBag.Products)
                         {
-                            if (orderInto.Id == order.Id) { amount++; }
+                            if (productInto.Id == product.Id) { amount++; }
                         }
                         <div class="row newRowBasket">
-                            <div class="col"><a href="/Home/DeleteProductFromOrder/@order.Id"><img src="~/Images/red cross.png" class="RedCrossProdImg" /></a></div>
-                            <div class="col"><img src="@order.ImageDirection" class="basketProdImg" /></div>
-                            <div class="col-4"><p>@order.Name</p></div>
-                            <div class="col-2"><p><b>@order.Price</b></p></div>
+                            <div class="col"><a href="/Home/DeleteProductFromOrder/@product.Id"><img src="~/Images/red cross.png" class="RedCrossProdImg" /></a></div>
+                            <div class="col"><img src="@product.ImageDirection" class="basketProdImg" /></div>
+                            <div class="col-4"><p>@product.Name</p></div>
+                            <div class="col-2">
+                                @{
+                                    Product productSale;
+                                    PrimaryProduct pp = product;
+                                    int price = 0;
+                                    switch (pp.Sale)
+                                    {
+                                        case "20":
+                                            productSale = pp;
+                                            productSale = new Sale20Percent(productSale);
+                                            price = product.GetCost(pp);
+                                            <p><b>@price грн.</b></p>
+                                            break;
+                                        case "40":
+                                            productSale = pp;
+                                            productSale = new Sale40Percent(productSale);
+                                            price = product.GetCost(pp);
+                                            <p><b>@price грн.</b></p>
+                                            break;
+                                        case "0":
+                                            price = product.Price;
+                                            <p><b>@price грн.</b></p>
+                                            break;
+                                    }
+                                }
+                            </div>
                             <div class="col-2"><input type="number" class="counter" name="counter" min="1" max="50" placeholder="@amount"></div>
-                            <div class="col-2"><p><b>Всього</b></p></div>
+                            <div class="col-2"><p><b>@(price*amount)</b></p></div>
                         </div>
                     }
                 }
@@ -79,11 +104,14 @@
     </form>
     <br />
     <br />
+    <br />
+    <hr />
+    <br />
     @{
         if (User.Identity.IsAuthenticated)
         {
-            <form method="post" action="@Url.Action("AddComment", "HomeController")">
-                <input type="text" name="Text" />
+            <form method="post" action="@Url.Action("/AddComment", "Home")">
+                <input type="text" name="Text" autocomplete="off" />
                 <input type="hidden" name="Page" value="Basket" />
                 <button type="submit">Додати</button>
             </form>
@@ -91,18 +119,26 @@
     }
     <br />
     <br />
-    <p class="BasketCommentsH">Коментарі</p>
-    <br />
     <div>
-        @foreach (var comment in Model)
-        {
-            if (comment.Page == "Basket")
+        <table class="tableComment">
+            @foreach (var comment in Model)
             {
-                <div id="textComments">
-                    "@comment.Text"
-                </div>
-                <hr class="lines" />
-            }
-        }
+                if (comment.Page == "Basket")
+                {
+                    <tr id="trComments">
+                        <th id="thComments">
+                            @{
+                                Medical_shop.Models.Services.MedicalContext db = new Medical_shop.Models.Services.MedicalContext();
+                                foreach (var item in db.Users)
+                                {
+                                    if (item.Id == comment.UserId) { <p>@item.Login :</p>}
+                                }
+                            }
+                        </th>
+                        <td id="tdComments"><textarea rows="4" cols="100" readonly>@comment.Text</textarea></td>
+                    </tr>
+                 }
+             }
+        </table>
     </div>
 </div>

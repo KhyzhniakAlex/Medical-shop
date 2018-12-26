@@ -20,11 +20,15 @@
                     вашого власного досвіду. Завчасне надання першої медичної допомоги може подарувати безцінні години до приїзду карети швидкої допомоги.</p>
     <br />
     <br />
+    <br />
+    <h4 class="MainCommentsH">Коментарі</h4>
+    <hr />
+    <br />
     @{
         if (User.Identity.IsAuthenticated)
         {
-            <form method="post" action="@Url.Action("AddComment", "HomeController")">
-                <input type="text" name="Text" />
+            <form method="post" action="@Url.Action("/AddComment", "Home")">
+                <input type="text" name="Text" size="50" autocomplete="off"/>
                 <input type="hidden" name="Page" value="Main" />
                 <button type="submit">Додати</button>
             </form>
@@ -32,18 +36,26 @@
     }
     <br />
     <br />
-    <p class="MainCommentsH">Коментарі</p>
-    <br />
     <div>
-        @foreach (var comment in Model)
-        {
-            if (comment.Page == "Main")
+        <table class="tableComment">
+            @foreach (var comment in Model)
             {
-                <div id="textComments">
-                    "@comment.Text"
-                </div>
-                    <hr class="lines" />
+                if (comment.Page == "Main")
+                {
+                    <tr id="trComments">
+                        <th id="thComments">
+                            @{ 
+                                Medical_shop.Models.Services.MedicalContext db = new Medical_shop.Models.Services.MedicalContext();
+                                foreach (var item in db.Users)
+                                {
+                                    if (item.Id == comment.UserId) { <p>@item.Login :</p>}
+                                }
+                            }
+                        </th>
+                        <td id="tdComments"><textarea rows="4" cols="100" readonly>@comment.Text</textarea></td>
+                    </tr>
+                }
             }
-        }
+        </table>
     </div>
 </div>

@@ -15,13 +15,13 @@ namespace Medical_shop.Controllers
 
         public ActionResult Main()
         {
-            
             return View(db.Comments);
         }
 
         public ActionResult Categories()
         {
             ViewBag.Categories = db.TypeOfProducts;
+            ViewBag.AmountOfCategories = db.TypeOfProducts.Count();
             return View(db.Comments);
         }
 
@@ -56,29 +56,51 @@ namespace Medical_shop.Controllers
 
 
         [HttpPost]
-        public ViewResult AddComment(Comment comment)
+        public RedirectResult AddComment(Comment comment)
         {
-            HomeServices.AddComment(comment);
-            return View($"~/Views/Home/{comment.Page}.cshtml");
+            string name = User.Identity.Name;
+            HomeServices.AddComment(comment, name);
+            return RedirectPermanent($"/Home/{comment.Page}");
         }
 
 
-        [HttpGet]
+        //[HttpGet]
         public ViewResult Products(int id)
         {
             TypeOfProduct type = HomeServices.GetProducts(id);
             if (type == null) return View("~/Views/Shared/Error.cshtml");
 
-            ViewBag.Products = type;
+            ViewBag.Products = type.Products;
+            ViewBag.AmountOfProducts = type.Products.Count();
             ViewBag.TypeName = type.Name;
             return View("~/Views/Home/Products.cshtml");
         }
 
-        [HttpPost]
-        public void Products(PrimaryProduct pp)
-        {
-            var order = (Order)Session["Order"];
-            HomeServices.PostProduct(pp, order);
+        //[HttpPost]
+        public ViewResult ProductsPost(int id)
+        { 
+            Order OrderForUser = null;
+            int userID = 0;
+            MedicalContext db = new MedicalContext();
+            foreach (var item in db.Users)
+            {
+                if (item.Login == User.Identity.Name)
+                    userID = item.Id;
+            }
+            foreach (var item in db.Orders)
+            {
+                if (item.UserId == userID) OrderForUser = item;
+            }
+            if (User.Identity.IsAuthenticated && OrderForUser == null)
+            {
+                var firstOrder = new Order { UserId = userID };
+                db.Orders.Add(firstOrder);
+                Session["Order"] = firstOrder;
+                db.SaveChanges();
+            }
+            Session["Order"] = OrderForUser;
+            HomeServices.PostProduct(id, OrderForUser);
+            return View("~/Views/Home/Products.cshtml");
         }
 
 
@@ -95,10 +117,30 @@ namespace Medical_shop.Controllers
         }
 
         [HttpPost]
-        public void OneProduct(PrimaryProduct pp)
+        public ViewResult OneProductPost(int id)
         {
-            var order = (Order)Session["Order"];
-            HomeServices.PostProduct(pp, order);
+            Order OrderForUser = null;
+            int userID = 0;
+            MedicalContext db = new MedicalContext();
+            foreach (var item in db.Users)
+            {
+                if (item.Login == User.Identity.Name)
+                    userID = item.Id;
+            }
+            foreach (var item in db.Orders)
+            {
+                if (item.UserId == userID) OrderForUser = item;
+            }
+            if (User.Identity.IsAuthenticated && OrderForUser == null)
+            {
+                var firstOrder = new Order { UserId = userID };
+                db.Orders.Add(firstOrder);
+                Session["Order"] = firstOrder;
+                db.SaveChanges();
+            }
+            Session["Order"] = OrderForUser;
+            HomeServices.PostProduct(id, OrderForUser);
+            return View("~/Views/Home/OneProduct.cshtml");
         }
 
 

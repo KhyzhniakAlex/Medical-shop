@@ -4,22 +4,22 @@
         ViewBag.Title = "Categories | Товари медичного призначення";
     }
 
-    @Styles.Render("~/Content/Products.css")
     <div class="jumbotron productJumb">
         <h3 id="productH3">Всі товари</h3>
         <div class="container-fluid">
             @{
-                int a = 0;
-                int b = 1;
-                while (a < ViewBag.Categories.Count() % 4)
+                int c = ViewBag.AmountOfCategories / 4;
+                if (ViewBag.AmountOfCategories % 4 != 0) { c++; }
+                for (int a = 0; a < c; a++)
                 {
+                    int b = 1;
                     <div class="row newRow">
                         @foreach (var type in ViewBag.Categories)
                         {
                             <div class="col-3 new">
                                 <a href="/Home/Products/@type.Id">
                                     <div>
-                                        <img src="@type.ImageDirection" class="imgAll" />
+                                        <img src="@Url.Content(type.ImageDirection)" class="imgAll" />
                                         <br />
                                         <p>@type.Name</p>
                                     </div>
@@ -34,33 +34,44 @@
         </div>
         <br />
         <br />
-        @{
-            if (User.Identity.IsAuthenticated)
-            {
-                <form method="post" action="@Url.Action("AddComment", "HomeController")">
-                    <input type="text" name="Text" />
-                    <input type="hidden" name="Page" value="Categories" />
-                    <button type="submit">Додати</button>
-                </form>
-            }
-        }
         <br />
-        <br />
-        <p class="CategoriesCommentsH">Коментарі</p>
-        <br />
-        <div>
-            @foreach (var comment in Model)
-            {
-                if (comment.Page == "Categories")
+        <div class="commentsCategories">
+            <hr />
+            <br />
+            @{
+                if (User.Identity.IsAuthenticated)
                 {
-                    <div id="textComments">
-                        "@comment.Text"
-                    </div>
-                    <hr class="lines" />
+                    <form method="post" action="@Url.Action("/AddComment", "Home")">
+                        <input type="text" name="Text" autocomplete="off" />
+                        <input type="hidden" name="Page" value="Categories" />
+                        <button type="submit">Додати</button>
+                    </form>
                 }
             }
+            <br />
+            <br />
+            <div>
+                <table class="tableComment">
+                    @foreach (var comment in Model)
+                    {
+                        if (comment.Page == "Categories")
+                        {
+                            <tr id="trComments">
+                                <th id="thComments">
+                                    @{
+                                        Medical_shop.Models.Services.MedicalContext db = new Medical_shop.Models.Services.MedicalContext();
+                                        foreach (var item in db.Users)
+                                        {
+                                            if (item.Id == comment.UserId)
+                                            { <p>@item.Login :</p>}
+                                        }
+                                    }
+                                </th>
+                                <td id="tdComments"><textarea rows="4" cols="100" readonly>@comment.Text</textarea></td>
+                            </tr>
+                                            }
+                                        }
+                </table>
+            </div>
         </div>
     </div>
-
-
-

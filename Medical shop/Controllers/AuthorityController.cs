@@ -35,17 +35,28 @@ namespace Medical_shop.Controllers
                 if (user != null)
                 {
                     Order order = null;
+                    int userID = 0;
                     MedicalContext db = new MedicalContext();
+                    foreach (var item in db.Users)
+                    {
+                        if (item.Login == model.Name)
+                            userID = item.Id;
+                    }
                     foreach (var item in db.Orders)
                     {
-                        order = item;
+                        if (item.UserId == userID) order = item;
                     }
-                    if (order == null) Session["Order"] = new Order { UserId = db.Users.Max(p => p.Id) };
+                    if (order == null)
+                    {
+                        order = new Order { Id = db.Orders.Max(p => p.Id) + 1, UserId = userID };
+                        Session["Order"] = order;
+                        db.Orders.Add(order);
+                    }
                     else Session["Order"] = order;
                     db.SaveChanges();
 
                     FormsAuthentication.SetAuthCookie(model.Name, true);
-                    return RedirectToAction("Contacts", "Home");
+                    return RedirectToAction("Main", "Home");
                 }
                 else ModelState.AddModelError("", "Пользователя с таким логином и паролем нет");
             }
@@ -100,18 +111,14 @@ namespace Medical_shop.Controllers
                     // если пользователь удачно добавлен в бд
                     if (user != null)
                     {
-                        Order order = null;
                         MedicalContext db = new MedicalContext();
-                        foreach (var item in db.Orders)
-                        {
-                            order = item;
-                        }
-                        if (order == null) Session["Order"] = new Order { UserId = db.Users.Max(p => p.Id) };
-                        else Session["Order"] = order;
+                        var firstOrder = new Order { Id = db.Orders.Max(p => p.Id) + 1, UserId = db.Users.Max(p => p.Id) };
+                        Session["Order"] = firstOrder;
+                        db.Orders.Add(firstOrder);
                         db.SaveChanges();
 
                         FormsAuthentication.SetAuthCookie(model.Name, true);
-                        return RedirectToAction("Contacts", "Home");
+                        return RedirectToAction("Main", "Home");
                     }
                 }
                 else ModelState.AddModelError("", "Пользователь с таким логином уже существует");

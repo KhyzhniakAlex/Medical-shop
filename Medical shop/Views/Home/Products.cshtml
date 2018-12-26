@@ -5,52 +5,56 @@
 
 @using Medical_shop.Models.Entities;
 @using Medical_shop.Models.Decorator;
-@Styles.Render("~/Content/Products.css")
 <div class="jumbotron productJumb">
     <h3 id="productH3">@ViewBag.TypeName</h3>
-    <form method="post">
+    @*<form method="post">*@
         <div class="container-fluid">
             @{
-                int a = 0;
-                int b = 1;
+                int c = ViewBag.AmountOfProducts / 4;
+                if (ViewBag.AmountOfProducts % 4 != 0) { c++; }
                 Product product;
-                while (a < ViewBag.Products.Count() % 4)
+                for (int a = 0; a < c; a++)
                 {
+                    int b = 1;
                     <div class="row newRow">
                         @foreach (PrimaryProduct pp in ViewBag.Products)
                         {
                             <div class="col-3 new">
                                 <a href="/Home/OneProduct/@pp.Id">
-                                    <input type="hidden" value="@pp.Id" name="Id" />
                                     <div>
-                                        <img src="@pp.ImageDirection" class="imgAll" />
+                                        <img src="@Url.Content(pp.ImageDirection)" class="imgAll" />
                                         <br />
                                         <p class="ProductP">@pp.Name (@pp.Amount)</p>
-                                        <p>@pp.Price грн.</p>
                                         @{
                                             switch (pp.Sale)
                                             {
                                                 case "20":
-                                                    <br />
                                                     product = pp;
                                                     product = new Sale20Percent(product);
-                                                    <p>@product.GetCost(pp) грн.</p>
+                                                    <p class="NotSaleP">@pp.Price грн.</p>
+                                                    <p class="SaleP">@product.GetCost(pp) грн.</p>
                                                     break;
                                                 case "40":
-                                                    <br />
                                                     product = pp;
                                                     product = new Sale40Percent(product);
-                                                    <p>@product.GetCost(pp) грн.</p>
+                                                    <p class="NotSaleP">@pp.Price грн.</p>
+                                                    <p class="SaleP">@product.GetCost(pp) грн.</p>
                                                     break;
                                                 case "0":
+                                                    <p class="SaleP">@pp.Price грн.</p>
                                                     break;
                                             }
                                         }
                                     </div>
                                 </a>
-                                <button type="submit" class="btn btn-success">Додати в кошик</button>
+                                @{
+                                    if (User.Identity.IsAuthenticated)
+                                    { <button type="button" class="btn btn-success" onclick="location.href ='/Home/ProductsPost/@pp.Id'">Додати в кошик</button> }
+                                    else
+                                    { <button type="button" class="btn btn-success">Додати в кошик</button> }
+                                }
                             </div>
-
+                            @*<input type="hidden" value="@pp.Id" name="Id" />*@
                             b++;
                             if (b % 4 == 0) { break; }
                         }
@@ -58,6 +62,6 @@
                 }
              }
         </div>
-    </form>
+    @*</form>*@
 </div>
 

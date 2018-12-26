@@ -13,7 +13,7 @@ namespace Medical_shop.Models.Entities
         public string Date { get; set; }
         public string Role { get; set; }
 
-        public List<Comment> Comments { get; set; }
-        public List<Order> Orders { get; set; }
+        public List<Comment> Comments = new List<Comment>();
+        public List<Order> Orders = new List<Order>();
     }
 }
