@@ -1,5 +1,5 @@
 ﻿.new {
-    //border: 1px solid red;
+    //border: 1px solid black;
     text-align: center;
     padding: 0;
     font-size: 1.3vw;
@@ -20,6 +20,9 @@ img, p {
     //border: 1px solid red;
 }
 
+
+
+
 .productJumb {
     background-color: #ffffff;
     width: 100%;
@@ -39,15 +42,25 @@ a:hover {
     color: black;
 }
 
-.endRow {
-    margin-bottom: 0%;
+.commentsCategories {
+    width: 90%;
+    margin: auto;
+}
+
+#tdComments {
+    padding-left: 1%;
+}
+
+.NotSaleP {
+    text-decoration: line-through;
+    color: #464646;
+    margin: 0;
 }
 
 
 
 
-
-.newContainerContracts {
+.newContainerContacts {
     background-color: #eaeaea;
     padding-top: 2%;
     padding-bottom: 1%;
@@ -113,13 +126,13 @@ iframe {
 }
 
 .col-2, .col-9 {
-    //border: 1px solid red;
+    
 }
 
 
 
 
-.TourniquetP {
+.ProductP {
     margin-bottom: 12%;
 }
 

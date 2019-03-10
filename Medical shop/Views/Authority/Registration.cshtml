@@ -1,4 +1,4 @@
-﻿
+﻿@model Medical_shop.Models.Authority.RegistrationModel
 @{
     ViewBag.Title = "Sign in";
 }
@@ -14,30 +14,48 @@
 </head>
 <body style="background-color:#006223">
     <div style="margin: 4% 8.5% 6% 8.5%; background-color: #ffffff;">
-        <div class="container">
-            <div class="row">
-                <form method="POST" style="max-width: 500px; padding-left: 0; margin-top: 60px;" class="col-4 offset-4">
-                    <h2 class="form-heading" style="text-align:center; margin-bottom: 4%;">Please sign in</h2>
 
-                    <div class="form-group">
-                        <input name="email" id="email" type="text" class="form-control" placeholder="Email" autofocus="true" />
-                        <br>
-                        <input name="username" id="username" type="text" class="form-control" placeholder="Username" />
-                        <br>
-                        <input name="password" id="password" type="password" class="form-control" placeholder="Password" />
-                        <br>
-                        <div class="checkbox mb-3" style="text-align:center;">
-                            <input type="checkbox" name="remember" value="remember-me">
-                            <label>Remember me</label>
+        @using (Html.BeginForm("Registration", "Authority", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="container">
+                <div class="row">
+                    <div style="max-width: 500px; padding-left: 0; margin-top: 60px;" class="col-4 offset-4">
+                        <h2 class="form-heading" style="text-align:center; margin-bottom: 4%;">Please sign in</h2>
+
+                        <div class="form-group">
+                            <input name="Name" id="name" type="text" class="form-control" placeholder="Username" autofocus required autocomplete="off" />
+                            @Html.ValidationMessageFor(model => model.Name)
+                            <br>
+                            <input name="Email" id="email" type="text" class="form-control" placeholder="Email" required />
+                            @Html.ValidationMessageFor(model => model.Email)
+                            <br>
+                            <input name="Password" id="password" type="password" class="form-control" placeholder="Password" required />
+                            @Html.ValidationMessageFor(model => model.Password)
+                            <br>
+                            <input name="ConfirmPassword" id="password" type="password" class="form-control" placeholder="Confirm password" required />
+                            @Html.ValidationMessageFor(model => model.ConfirmPassword)
+                            <br>
+                            <input name="SpecialPassword" id="password" type="password" class="form-control" placeholder="Special password" />
+                            @Html.ValidationMessageFor(model => model.SpecialPassword)
+                            <br>
+                            <input name="ConfirmSpecialPassword" id="password" type="password" class="form-control" placeholder="Confirm special password" />
+                            @Html.ValidationMessageFor(model => model.ConfirmSpecialPassword)
+                            <br>
+                            <div class="checkbox mb-3" style="text-align:center;">
+                                <input type="checkbox" name="remember" value="remember-me">
+                                <label>Remember me</label>
+                            </div>
+                            <br>
+                            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+                            <br />
+                            <br />
                         </div>
-                        <br>
-                        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-                        <br />
-                        <br />
                     </div>
-                </form>
+                </div>
             </div>
-        </div>
+        }
     </div>
 </body>
 </html>

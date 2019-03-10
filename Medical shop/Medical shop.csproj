@@ -133,12 +133,35 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Base.cs" />
-    <Compile Include="Models\Client.cs" />
-    <Compile Include="Models\Comment.cs" />
-    <Compile Include="Models\Order.cs" />
-    <Compile Include="Models\Product.cs" />
-    <Compile Include="Models\TypeOfProduct.cs" />
+    <Compile Include="Migrations\201812141211336_init.cs" />
+    <Compile Include="Migrations\201812141211336_init.Designer.cs">
+      <DependentUpon>201812141211336_init.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812181805591_init1.cs" />
+    <Compile Include="Migrations\201812181805591_init1.Designer.cs">
+      <DependentUpon>201812181805591_init1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812231418527_init2.cs" />
+    <Compile Include="Migrations\201812231418527_init2.Designer.cs">
+      <DependentUpon>201812231418527_init2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Entities\Base.cs" />
+    <Compile Include="Models\Authority\LoginModel.cs" />
+    <Compile Include="Models\Entities\PrimaryProduct.cs" />
+    <Compile Include="Models\Decorator\ProductDecorator.cs" />
+    <Compile Include="Models\Decorator\Sale20Percent.cs" />
+    <Compile Include="Models\Decorator\Sale40Percent.cs" />
+    <Compile Include="Models\Authority\RegistrationModel.cs" />
+    <Compile Include="Models\Entities\User.cs" />
+    <Compile Include="Models\Entities\Comment.cs" />
+    <Compile Include="Models\Entities\Order.cs" />
+    <Compile Include="Models\Entities\Product.cs" />
+    <Compile Include="Models\Entities\RuleForAdmin.cs" />
+    <Compile Include="Models\Entities\TypeOfProduct.cs" />
+    <Compile Include="Models\Services\HomeServices.cs" />
+    <Compile Include="Models\Services\MedicalContext.cs" />
+    <Compile Include="Models\Services\MedicalDbInitializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -147,6 +170,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap1.css" />
     <Content Include="Content\LayoutStyle.css" />
+    <Content Include="Content\OneProductStyle.css" />
     <Content Include="Content\ProductsStyle.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -172,6 +196,7 @@
     <Content Include="Images\Pay.jpg" />
     <Content Include="Images\plasters.jpg" />
     <Content Include="Images\pneumothorax.jpg" />
+    <Content Include="Images\red cross.png" />
     <Content Include="Images\rehabilitation.jpg" />
     <Content Include="Images\remedies for injuries.jpg" />
     <Content Include="Images\SAM-junctional-tourniquet.png" />
@@ -214,10 +239,11 @@
     <Content Include="Views\Home\Main.cshtml" />
     <Content Include="Views\Home\Questions.cshtml" />
     <Content Include="Views\Home\Basket.cshtml" />
-    <Content Include="Views\Home\Products.cshtml" />
+    <Content Include="Views\Home\Categories.cshtml" />
     <Content Include="Views\Home\Contacts.cshtml" />
-    <Content Include="Views\Home\Tourniquets.cshtml" />
     <Content Include="Views\Home\Delivery.cshtml" />
+    <Content Include="Views\Home\Products.cshtml" />
+    <Content Include="Views\Home\OneProduct.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -229,6 +255,17 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201812141211336_init.resx">
+      <DependentUpon>201812141211336_init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812181805591_init1.resx">
+      <DependentUpon>201812181805591_init1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812231418527_init2.resx">
+      <DependentUpon>201812231418527_init2.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

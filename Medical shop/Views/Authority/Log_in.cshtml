@@ -1,4 +1,5 @@
-﻿@{
+﻿@model Medical_shop.Models.Authority.LoginModel
+@{
     ViewBag.Title = "Log in";
 }
 
@@ -13,29 +14,37 @@
 </head>
 <body style="background-color:#006223">
     <div style="margin: 4% 8.5% 5% 8.5%; background-color: #ffffff;">
-        <div class="container-fluid">
-            <div class="row">
-                <form method="POST" style="max-width: 500px; padding-left: 0; margin-top: 60px;" class="col-4 offset-4">
-                    <h2 class="form-heading" style="text-align:center; margin-bottom: 4%;">Please log in</h2>
 
-                    <div class="form-group ">
-                        <input name="email" type="text" class="form-control" placeholder="Email" autofocus="true" />
-                        <br>
-                        <input name="password" type="password" class="form-control" placeholder="Password" />
-                        <br>
-                        <div class="checkbox mb-3" style="text-align:center;">
-                            <input type="checkbox" name="remember" value="remember-me">
-                            <label>Remember me</label>
+        @using (Html.BeginForm("Log_in", "Authority", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="container">
+                <div class="row">
+                    <div style="max-width: 500px; padding-left: 0; margin-top: 60px;" class="col-4 offset-4">
+                        <h2 class="form-heading" style="text-align:center; margin-bottom: 4%;">Please sign in</h2>
+
+                        <div class="form-group">
+                            <input name="Name" id="name" type="text" class="form-control" placeholder="Username" autofocus required autocomplete="off" />
+                            @Html.ValidationMessageFor(model => model.Name)
+                            <br>
+                            <input name="Password" id="password" type="password" class="form-control" placeholder="Password" required />
+                            @Html.ValidationMessageFor(model => model.Password)
+                            <br>
+                            <div class="checkbox mb-3" style="text-align:center;">
+                                <input type="checkbox" name="remember" value="remember-me">
+                                <label>Remember me</label>
+                            </div>
+                            <br>
+                            <button class="btn btn-lg btn-primary btn-block" type="submit">Log In</button>
+                            <a href="@Url.Action("/Registration", "Authority")" class="btn btn-lg btn-secondary btn-block">Sign in</a>
+                            <br />
+                            <br />
                         </div>
-                        <br />
-                        <button class="btn btn-lg btn-primary btn-block" type="submit">Log In</button>
-                        <a href="@Url.Action("/Registration", "Authority")" class="btn btn-lg btn-secondary btn-block">Sign in</a>
-                        <br />
-                        <br />
                     </div>
-                </form>
+                </div>
             </div>
-        </div>
+        }
      </div>
 </body>
 </html>

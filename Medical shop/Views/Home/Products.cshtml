@@ -3,202 +3,65 @@
     ViewBag.Title = "Products | Товари медичного призначення";
 }
 
-@Styles.Render("~/Content/Products.css")
+@using Medical_shop.Models.Entities;
+@using Medical_shop.Models.Decorator;
 <div class="jumbotron productJumb">
-    <h3 id="productH3">Всі товари</h3>
-    <div class="container-fluid">
-        <div class="row newRow">
-            <div class="col-3 new">
-                <a>
-                    <div>
-                        <img src="~/Images/aid kit.jpg" class="imgAll" />
-                        <br />
-                        <p>Аптечки</p>
+    <h3 id="productH3">@ViewBag.TypeName</h3>
+    @*<form method="post">*@
+        <div class="container-fluid">
+            @{
+                int c = ViewBag.AmountOfProducts / 4;
+                if (ViewBag.AmountOfProducts % 4 != 0) { c++; }
+                Product product;
+                for (int a = 0; a < c; a++)
+                {
+                    int b = 1;
+                    <div class="row newRow">
+                        @foreach (PrimaryProduct pp in ViewBag.Products)
+                        {
+                            <div class="col-3 new">
+                                <a href="/Home/OneProduct/@pp.Id">
+                                    <div>
+                                        <img src="@Url.Content(pp.ImageDirection)" class="imgAll" />
+                                        <br />
+                                        <p class="ProductP">@pp.Name (@pp.Amount)</p>
+                                        @{
+                                            switch (pp.Sale)
+                                            {
+                                                case "20":
+                                                    product = pp;
+                                                    product = new Sale20Percent(product);
+                                                    <p class="NotSaleP">@pp.Price грн.</p>
+                                                    <p class="SaleP">@product.GetCost(pp) грн.</p>
+                                                    break;
+                                                case "40":
+                                                    product = pp;
+                                                    product = new Sale40Percent(product);
+                                                    <p class="NotSaleP">@pp.Price грн.</p>
+                                                    <p class="SaleP">@product.GetCost(pp) грн.</p>
+                                                    break;
+                                                case "0":
+                                                    <p class="SaleP">@pp.Price грн.</p>
+                                                    break;
+                                            }
+                                        }
+                                    </div>
+                                </a>
+                                @{
+                                    if (User.Identity.IsAuthenticated)
+                                    { <button type="button" class="btn btn-success" onclick="location.href ='/Home/ProductsPost/@pp.Id'">Додати в кошик</button> }
+                                    else
+                                    { <button type="button" class="btn btn-success">Додати в кошик</button> }
+                                }
+                            </div>
+                            @*<input type="hidden" value="@pp.Id" name="Id" />*@
+                            b++;
+                            if (b % 4 == 0) { break; }
+                        }
                     </div>
-                </a>
-            </div>
-            <div class="col-3 new">
-                <a href="@Url.Action("/Tourniquets", "Home")">
-                    <div>
-                        <img src="~/Images/arterial harnesses.jpg" class="imgAll" />
-                        <br />
-                        <p>Артеріальні джгути</p>
-                    </div>
-                </a>
-            </div>
-            <div class="col-3 new">
-                <a>
-                    <div>
-                        <img src="~/Images/pneumothorax.jpg" class="imgAll" />
-                        <br />
-                        <p>Засоби при пневмотораксі</p>
-                    </div>
-                </a>
-            </div>
-            <div class="col-3 new">
-                <a>
-                    <div>
-                        <img src="~/Images/bags for aid kit.jpg" class="imgAll" />
-                        <br />
-                        <p>Сумки для аптечок</p>
-                    </div>
-                </a>
-            </div>
+                }
+             }
         </div>
-
-        <div class="row newRow">
-            <div class="col-3 new">
-                <a>
-                    <div>
-                        <img src="~/Images/bandage.jpg" class="imgAll" />
-                        <br />
-                        <p>Перев'язувальні матеріали</p>
-                    </div>
-                </a>
-            </div>
-            <div class="col-3 new">
-                <a>
-                    <div>
-                        <img src="~/Images/military bandage.png" class="imgAll" />
-                        <br />
-                        <p>Військові перев'язувальні матеріали</p>
-                    </div>
-                </a>
-            </div>
-            <div class="col-3 new">
-                <a>
-                    <div>
-                        <img src="~/Images/hemostatic drugs.jpg" class="imgAll" />
-                        <br />
-                        <p>Гемостатичні засоби</p>
-                    </div>
-                </a>
-            </div>
-            <div class="col-3 new">
-                <a>
-                    <div>
-                        <img src="~/Images/burn.jpg" class="imgAll" />
-                        <br />
-                        <p>Засоби при опіках</p>
-                    </div>
-                </a>
-            </div>
-        </div>
-        
-        <div class="row newRow">
-            <div class="col-3 new">
-                <a>
-                    <div>
-                        <img src="~/Images/artificial ventilation.jpg" class="imgAll" />
-                        <br />
-                        <p>Засоби для штучної вентиляції</p>
-                    </div>
-                </a>
-            </div>
-            <div class="col-3 new">
-                <a>
-                    <div>
-                        <img src="~/Images/intravenous and intra-intestine therapy.jpg" class="imgAll" />
-                        <br />
-                        <p>Все для внутрішньовенної та внутрішньокісткової терапії</p>
-                    </div>
-                </a>
-            </div>
-            <div class="col-3 new">
-                <a>
-                    <div>
-                        <img src="~/Images/medical electronics.jpg" class="imgAll" />
-                        <br />
-                        <p>Медична електроніка</p>
-                    </div>
-                </a>
-            </div>
-            <div class="col-3 new">
-                <a>
-                    <div>
-                        <img src="~/Images/membrane-valve.jpg" class="imgAll" />
-                        <br />
-                        <p>Плівка-клапан</p>
-                    </div>
-                </a>
-            </div>
-        </div>
-        
-        <div class="row newRow">
-            <div class="col-3 new">
-                <a>
-                    <div>
-                        <img src="~/Images/remedies for injuries.jpg" class="imgAll" />
-                        <br />
-                        <p>Засоби при травмах</p>
-                    </div>
-                </a>
-            </div>
-            <div class="col-3 new">
-                <a>
-                    <div>
-                        <img src="~/Images/rehabilitation.jpg" class="imgAll" />
-                        <br />
-                        <p>Засоби для реабілітації</p>
-                    </div>
-                </a>
-            </div>
-            <div class="col-3 new">
-                <a>
-                    <div>
-                        <img src="~/Images/mannequins for SLR.jpg" class="imgAll" />
-                        <br />
-                        <p>Манекени для СЛР</p>
-                    </div>
-                </a>
-            </div>
-            <div class="col-3 new">
-                <a>
-                    <div>
-                        <img src="~/Images/tools for rescuers.jpg" class="imgAll" />
-                        <br />
-                        <p>Інструменти для рятівників</p>
-                    </div>
-                </a>
-            </div>
-        </div>
-
-        <div class="row newRow endRow">
-            <div class="col-3 new">
-                <a>
-                    <div>
-                        <img src="~/Images/gloves.jpg" class="imgAll" />
-                        <br />
-                        <p>Рукавиці</p>
-                    </div>
-                </a>
-            </div>
-            <div class="col-3 new">
-                <a>
-                    <div>
-                        <img src="~/Images/box for drugs.jpg" class="imgAll" />
-                        <br />
-                        <p>Бокси для таблеток</p>
-                    </div>
-                </a>
-            </div>
-            <div class="col-3 new">
-                <a>
-                    <div>
-                        <img src="~/Images/plasters.jpg" class="imgAll" />
-                        <br />
-                        <p>Пластирі</p>
-                    </div>
-                </a>
-            </div>
-            <div class="col-3 new">
-                <a>
-                    <div>
-                    </div>
-                </a>
-            </div>
-        </div>
-
-    </div>
+    @*</form>*@
 </div>
 

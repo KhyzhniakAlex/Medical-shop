@@ -24,7 +24,6 @@
 }
 
 .col-3 {
-    border: 1px solid red;
     text-align: center;
 }
 
@@ -38,7 +37,7 @@ li {
 }
 
 .col-3, .col-4, .col-2, .col-6, .col {
-    //border: 1px solid red;
+    
 }
 
 .tableBasketEnd {
@@ -55,6 +54,5 @@ li {
 
 .tableBasketEnd th {
     width: 40%;
-    
 }
 
